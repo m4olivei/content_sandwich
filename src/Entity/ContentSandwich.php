@@ -103,6 +103,11 @@ class ContentSandwich extends ConfigEntityBase implements ContentSandwichInterfa
    * {@inheritdoc}
    */
   public function getPluginCollections() {
+    // This method serves to flag to Drupal which of the properties of our
+    // entity store plugin configuration. Plugins themselves can't store
+    // configuration, entities do. This is a way to delegate the handling of
+    // the configuration that belongs to the plugin from the entity, where it is
+    // actually stored, to the plugin in a standard way.
     if (!$this->content_sandwich_artist) {
       return [
         'content_sandwich_artist_settings' => [],
