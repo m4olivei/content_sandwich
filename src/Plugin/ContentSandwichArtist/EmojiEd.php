@@ -20,6 +20,15 @@ class EmojiEd extends ContentSandwichArtistBase {
   /**
    * {@inheritdoc}
    */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+
+    $this->setConfiguration($configuration);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getBread() {
     return str_repeat($this->configuration['bread'], $this->configuration['num_slices']);
   }
