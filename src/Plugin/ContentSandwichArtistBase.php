@@ -2,7 +2,7 @@
 
 namespace Drupal\content_sandwich\Plugin;
 
-use Drupal\Component\Plugin\PluginBase;
+use Drupal\Core\Plugin\PluginBase;
 
 /**
  * Base class for Content sandwich artist plugins.

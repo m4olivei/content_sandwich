@@ -4,6 +4,8 @@ namespace Drupal\content_sandwich\Plugin\ContentSandwichArtist;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\content_sandwich\Plugin\ContentSandwichArtistBase;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Plugin\PluginFormInterface;
 
 /**
  * Emoji Ed the sandwich artist.
@@ -15,7 +17,7 @@ use Drupal\content_sandwich\Plugin\ContentSandwichArtistBase;
  *   label = "Emoji Ed"
  * )
  */
-class EmojiEd extends ContentSandwichArtistBase {
+class EmojiEd extends ContentSandwichArtistBase implements PluginFormInterface {
 
   /**
    * {@inheritdoc}
@@ -73,6 +75,69 @@ class EmojiEd extends ContentSandwichArtistBase {
    * {@inheritdoc}
    */
   public function calculateDependencies() {
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+    $form['num_slices'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Number of slices'),
+      '#description' => $this->t('How much bread would you like?'),
+      '#default_value' => $this->getConfiguration()['num_slices'],
+    ];
+
+    $form['bread'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Bread'),
+      '#description' => $this->t('Which tasty emoji would you like envelope your content?'),
+      '#options' => [
+        '🌭' => '🌭',
+        '🍞' => '🍞',
+        '🍔' => '🍔',
+        '🌮' => '🌮',
+        '🌯' => '🌯',
+        '🍩' => '🍩',
+      ],
+      '#default_value' => $this->getConfiguration()['bread'],
+    ];
+
+    $form['sauce_level'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Sauce level'),
+      '#description' => $this->t('Just how saucy could one be if given the option?'),
+      '#default_value' => $this->getConfiguration()['sauce_level'],
+    ];
+
+    $form['sauce'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Sauce'),
+      '#description' => $this->t('Choose from my wide selection of sauces.'),
+      '#options' => [
+        '🍝' => '🍝',
+        '🍼' => '🍼',
+        '🍾' => '🍾',
+        '🦄' => '🦄',
+        '😭' => '😭',
+      ],
+      '#default_value' => $this->getConfiguration()['sauce'],
+    ];
+
+    return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function validateConfigurationForm(array &$form, FormStateInterface $form_state) {
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
+    $this->configuration = $form_state->getValues();
   }
 
 }
