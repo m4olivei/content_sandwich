@@ -9,7 +9,27 @@ use Drupal\Component\Plugin\PluginInspectionInterface;
  */
 interface ContentSandwichArtistInterface extends PluginInspectionInterface {
 
+  /**
+   * Get the bread for the content sandwich.
+   *
+   * The bread will be placed before and after the content to form a delicious
+   * content sandwich.
+   *
+   * @return string
+   *   Delicious textual bread for the content sandwich.
+   */
+  public function getBread();
 
-  // Add get/set methods for your plugin type here.
+  /**
+   * Get the sauce for the content sandwich.
+   *
+   * What's a sandwich without sauce?! Surly that's no sandwich.
+   *
+   * The sauce will be placed beneath the top bun.
+   *
+   * @return string
+   *   Yummy textual sauce for the content sandwich.
+   */
+  public function getSauce();
 
 }
