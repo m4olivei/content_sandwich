@@ -127,6 +127,12 @@ class ContentSandwichForm extends EntityForm {
     /** @var \Drupal\content_sandwich\Entity\ContentSandwichInterface $content_sandwich */
     $content_sandwich = $this->entity;
 
+    // Manage the handling of the content sandwich artist setting through the
+    // plugin collection, which allows us to get an instance of the plugin
+    // to handle submission of the data, and will later allow Drupal core
+    // to pull the final configuration values that are saved to the config
+    // entity from the plugin instance itself. Thereby giving complete ownership
+    // of the relevant config values to the plugin.
     $plugin_collection = $content_sandwich->getPluginCollections()['content_sandwich_artist_settings'];
     /** @var \Drupal\content_sandwich\Plugin\ContentSandwichArtistInterface $current_sandwich_artist */
     $current_sandwich_artist = $plugin_collection->get($content_sandwich->getContentSandwichArtist());
