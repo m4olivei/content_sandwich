@@ -1,0 +1,4 @@
+content_sandwich:
+  css:
+    theme:
+      css/content-sandwich.css: {}

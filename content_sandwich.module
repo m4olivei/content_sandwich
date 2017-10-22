@@ -5,6 +5,9 @@
  * Contains content_sandwich.module.
  */
 
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
@@ -21,6 +24,56 @@ function content_sandwich_help($route_name, RouteMatchInterface $route_match) {
 
     default:
   }
+}
+
+/**
+ * Implements hook_entity_view_alter().
+ */
+function content_sandwich_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+  if (!($entity->getEntityTypeId() == 'node')) {
+    return;
+  }
+
+  /** @var \Drupal\content_sandwich\Plugin\ContentSandwichArtistManager $sandwich_artist_manager */
+  $sandwich_artist_manager = \Drupal::service('plugin.manager.content_sandwich_artist');
+  $sandwiches = \Drupal::entityTypeManager()->getStorage('content_sandwich')->loadMultiple();
+  /** @var \Drupal\content_sandwich\Entity\ContentSandwich $sandwich */
+  $i = 0;
+  foreach ($sandwiches as $sandwich) {
+    $sandwich_artist_id = $sandwich->getContentSandwichArtist();
+    /** @var \Drupal\content_sandwich\Plugin\ContentSandwichArtistInterface $sandwich_artist */
+    $sandwich_artist = $sandwich_artist_manager->createInstance($sandwich_artist_id);
+    $build['bread_top.' . $sandwich->id()] = [
+      '#theme' => 'bread',
+      '#bread' => $sandwich_artist->getBread(),
+      '#artist_id' => $sandwich_artist_id,
+      '#weight' => -1000 - $i - 1,
+    ];
+    $build['sauce.' . $sandwich->id()] = [
+      '#theme' => 'sauce',
+      '#sauce' => $sandwich_artist->getSauce(),
+      '#artist_id' => $sandwich_artist_id,
+      '#weight' => -1000 - $i,
+    ];
+    $build['bread_bottom.' . $sandwich->id()] = [
+      '#theme' => 'bread',
+      '#bread' => $sandwich_artist->getBread(),
+      '#artist_id' => $sandwich_artist_id,
+      '#weight' => 1000 + $i,
+    ];
+    // Cacheability metadata.
+    /** @var \Drupal\Core\Render\Renderer $renderer */
+    $renderer = \Drupal::service('renderer');
+    $renderer->addCacheableDependency($build, $sandwich);
+
+    $i += 2;
+  }
+
+  // Attach some CSS.
+  $build['#attached']['library'][] = 'content_sandwich/content_sandwich';
+
+  // Always add the list cache tag.
+  $build['#cache']['tags'] = Cache::mergeTags($build['#cache']['tags'], Drupal::entityTypeManager()->getDefinition('content_sandwich')->getListCacheTags());
 }
 
 /**
