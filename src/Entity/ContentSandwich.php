@@ -54,4 +54,25 @@ class ContentSandwich extends ConfigEntityBase implements ContentSandwichInterfa
    */
   protected $label;
 
+  /**
+   * Sandwich artist plugin id.
+   *
+   * @var string
+   */
+  protected $content_sandwich_artist;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getLabel() {
+    return $this->label;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getContentSandwichArtist() {
+    return $this->content_sandwich_artist;
+  }
+
 }

@@ -10,3 +10,6 @@ content_sandwich.content_sandwich.*:
       label: 'Label'
     uuid:
       type: string
+    content_sandwich_artist:
+      type: string
+      label: 'Content sandwich artist'

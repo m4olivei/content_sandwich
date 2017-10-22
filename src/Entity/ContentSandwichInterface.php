@@ -9,5 +9,20 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
  */
 interface ContentSandwichInterface extends ConfigEntityInterface {
 
-  // Add get/set methods for your configuration properties here.
+  /**
+   * Return the label.
+   *
+   * @return string
+   *   The label.
+   */
+  public function getLabel();
+
+  /**
+   * Return the sandwich artist plugin ID.
+   *
+   * @return string
+   *   The sandwich artist plugin ID.
+   */
+  public function getContentSandwichArtist();
+
 }
