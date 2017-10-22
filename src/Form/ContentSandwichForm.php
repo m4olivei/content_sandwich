@@ -75,7 +75,9 @@ class ContentSandwichForm extends EntityForm {
       $options[$sandwich_artist_id] = $sandwich_artist['label'];
     }
 
-    $content_sandwich_artist_id = $content_sandwich->getContentSandwichArtist();
+    // On a fresh form load, we are loading the plugin from the saved config
+    // entity. For an #ajax callback, it comes from the form state.
+    $content_sandwich_artist_id = ($form_state->getValue('content_sandwich_artist') ? $form_state->getValue('content_sandwich_artist') : $content_sandwich->getContentSandwichArtist());
 
     // When creating a new content sandwich, default to the first found content
     // sandwich artist.
@@ -122,7 +124,7 @@ class ContentSandwichForm extends EntityForm {
   public function save(array $form, FormStateInterface $form_state) {
     $form_state->cleanValues();
 
-    /** @var \Drupal\content_sandwich\Entity\ContentSandwich $content_sandwich */
+    /** @var \Drupal\content_sandwich\Entity\ContentSandwichInterface $content_sandwich */
     $content_sandwich = $this->entity;
 
     $plugin_collection = $content_sandwich->getPluginCollections()['content_sandwich_artist_settings'];
