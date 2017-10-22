@@ -2,12 +2,13 @@
 
 namespace Drupal\content_sandwich\Plugin;
 
+use Drupal\Component\Plugin\ConfigurablePluginInterface;
 use Drupal\Component\Plugin\PluginInspectionInterface;
 
 /**
  * Defines an interface for Content sandwich artist plugins.
  */
-interface ContentSandwichArtistInterface extends PluginInspectionInterface {
+interface ContentSandwichArtistInterface extends PluginInspectionInterface, ConfigurablePluginInterface {
 
   /**
    * Get the bread for the content sandwich.

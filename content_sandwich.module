@@ -42,7 +42,7 @@ function content_sandwich_entity_view_alter(array &$build, EntityInterface $enti
   foreach ($sandwiches as $sandwich) {
     $sandwich_artist_id = $sandwich->getContentSandwichArtist();
     /** @var \Drupal\content_sandwich\Plugin\ContentSandwichArtistInterface $sandwich_artist */
-    $sandwich_artist = $sandwich_artist_manager->createInstance($sandwich_artist_id);
+    $sandwich_artist = $sandwich_artist_manager->createInstance($sandwich_artist_id, $sandwich->getContentSandwichArtistSettings());
     $build['bread_top.' . $sandwich->id()] = [
       '#theme' => 'bread',
       '#bread' => $sandwich_artist->getBread(),
