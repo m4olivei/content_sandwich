@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * Contains content_sandwich.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function content_sandwich_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the content_sandwich module.
+    case 'help.page.content_sandwich':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Create content sandwiches on you&#039;re site. Mmmmmm content.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function content_sandwich_theme($existing, $type, $theme, $path) {
+  return [
+    'bread' => [
+      'variables' => ['bread' => NULL, 'artist_id' => NULL],
+    ],
+    'sauce' => [
+      'variables' => ['sauce' => NULL, 'artist_id' => NULL],
+    ],
+  ];
+}

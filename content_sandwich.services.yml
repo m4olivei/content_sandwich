@@ -1,0 +1,4 @@
+services:
+  plugin.manager.content_sandwich_artist:
+    class: Drupal\content_sandwich\Plugin\ContentSandwichArtistManager
+    parent: default_plugin_manager

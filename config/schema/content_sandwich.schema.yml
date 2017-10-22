@@ -1,0 +1,12 @@
+content_sandwich.content_sandwich.*:
+  type: config_entity
+  label: 'Content sandwich config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    uuid:
+      type: string

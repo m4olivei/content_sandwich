@@ -1,0 +1,9 @@
+
+# Content sandwich menu items definition
+entity.content_sandwich.collection:
+  title: 'Content sandwich'
+  route_name: entity.content_sandwich.collection
+  description: 'List Content sandwich (bundles)'
+  parent: system.admin_structure
+  weight: 99
+
