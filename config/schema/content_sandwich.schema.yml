@@ -13,3 +13,26 @@ content_sandwich.content_sandwich.*:
     content_sandwich_artist:
       type: string
       label: 'Content sandwich artist'
+    content_sandwich_artist_settings:
+      type: content_sandwich.content_sandwich_artist.[%parent.content_sandwich_artist]
+
+content_sandwich.content_sandwich_artist.*:
+  type: mapping
+  label: 'Content sandwich artist settings'
+
+content_sandwich.content_sandwich_artist.emoji_ed:
+  type: mapping
+  label: 'Emoji Ed content sandwich artist'
+  mapping:
+    num_slices:
+      type: integer
+      label: 'Number of slices'
+    bread:
+      type: string
+      label: 'Bread'
+    sauce_level:
+      type: integer
+      label: 'Sauce level'
+    sauce:
+      type: string
+      label: 'Sauce'

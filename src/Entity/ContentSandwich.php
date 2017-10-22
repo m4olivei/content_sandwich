@@ -3,6 +3,7 @@
 namespace Drupal\content_sandwich\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
+use Drupal\Core\Plugin\DefaultSingleLazyPluginCollection;
 
 /**
  * Defines the Content sandwich entity.
@@ -62,6 +63,22 @@ class ContentSandwich extends ConfigEntityBase implements ContentSandwichInterfa
   protected $content_sandwich_artist;
 
   /**
+   * Sandwich artist settings.
+   *
+   * @var array
+   */
+  protected $content_sandwich_artist_settings = [];
+
+  /**
+   * The plugins this config entity is dependent on.
+   *
+   * This is used to allow plugins to declare config dependencies.
+   *
+   * @var \Drupal\Core\Plugin\DefaultSingleLazyPluginCollection
+   */
+  protected $sandwichArtistPluginCollection;
+
+  /**
    * {@inheritdoc}
    */
   public function getLabel() {
@@ -73,6 +90,32 @@ class ContentSandwich extends ConfigEntityBase implements ContentSandwichInterfa
    */
   public function getContentSandwichArtist() {
     return $this->content_sandwich_artist;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getContentSandwichArtistSettings() {
+    return $this->content_sandwich_artist_settings;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getPluginCollections() {
+    if (!$this->content_sandwich_artist) {
+      return [
+        'content_sandwich_artist_settings' => [],
+      ];
+    }
+
+    if (!isset($this->sandwichArtistPluginCollection)) {
+      $this->sandwichArtistPluginCollection = new DefaultSingleLazyPluginCollection(\Drupal::service('plugin.manager.content_sandwich_artist'), $this->getContentSandwichArtist(), $this->getContentSandwichArtistSettings());
+    }
+
+    return [
+      'content_sandwich_artist_settings' => $this->sandwichArtistPluginCollection,
+    ];
   }
 
 }
